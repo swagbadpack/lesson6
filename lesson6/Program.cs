@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace lesson6
 {
@@ -34,38 +31,29 @@ namespace lesson6
         {
             using (StreamWriter sw = new StreamWriter("Сотрудники.csv", true, Encoding.Unicode))
             {
-                
                 string note = string.Empty;
                 Console.Write("\nВведите ID: ");
                 note += $"{Console.ReadLine()}\t";
-
 
                 string now = DateTime.Now.ToString();
                 Console.Write($"Время заметки {now}");
                 note += $"{now}\t";
 
-                
                 Console.Write("\nВведите ФИО: ");
                 note += $"{Console.ReadLine()}\t";
 
-                
                 Console.Write("\nВведите возраст: ");
                 note += $"{Console.ReadLine()}\t";
 
-                
                 Console.Write("\nВведите Рост: ");
                 note += $"{Console.ReadLine()}\t";
 
-                
                 Console.Write("\nВведите дату рождения: ");
                 note += $"{Console.ReadLine()}\t";
 
-                
                 Console.Write("\nВведите место рождения: ");
                 note += $"{Console.ReadLine()}\t";
                 sw.WriteLine(note);
-
-
             }
         }
 
@@ -86,9 +74,6 @@ namespace lesson6
                 DataEntry();
                 Console.ReadKey();
             }
-            
-            
-            
         }
     }
 }
