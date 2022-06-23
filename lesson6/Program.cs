@@ -10,56 +10,56 @@ namespace lesson6
 {
     internal class Program
     {
-        ///// <summary>
-        ///// метод чтение
-        ///// </summary>
-        ///// <param name="line"></param>
-        //static void ReadingData()
-        //{
-        //    using (StreamReader sr = new StreamReader("Сотрудники.csv", Encoding.Unicode))
-        //    {
-        //        string line = "null";
-        //        Console.WriteLine($"{"ID",3} {"Время добавления",20} {"ФИО",25} {"Возраст",3} {"Рост",4} {"Дата рождения",12} {"Место рождения",16}");
-        //        while ((line = sr.ReadLine()) != null)
-        //        {
-        //            string[] data = line.Split('\t');
-        //            Console.WriteLine($"{data[0],3} {data[1],20} {data[2],25} {data[3],3} {data[4],4} {data[5],12} {data[6],16}");
-        //        }
-        //    }
-        //}
-        ///// <summary>
-        ///// метод записи
-        ///// </summary>
-        ///// <param name="line"></param>
-        //static void DataEntry()
-        //{
-        //    using (StreamWriter sw = new StreamWriter("Сотрудники.csv", true, Encoding.Unicode))
-        //    {
-        //        string note = string.Empty;
-        //        Console.Write("\nВведите ID: ");
-        //        note += $"{Console.ReadLine()}\t";
+        /// <summary>
+        /// метод чтение
+        /// </summary>
+        /// <param name="line"></param>
+        static void readingdata()
+        {
+            using (StreamReader sr = new StreamReader("сотрудники.csv", Encoding.Unicode))
+            {
+                string line = "null";
+                Console.WriteLine($"{"id",3} {"время добавления",20} {"фио",25} {"возраст",3} {"рост",4} {"дата рождения",12} {"место рождения",16}");
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] data = line.Split('\t');
+                    Console.WriteLine($"{data[0],3} {data[1],20} {data[2],25} {data[3],3} {data[4],4} {data[5],12} {data[6],16}");
+                }
+            }
+        }
+        /// <summary>
+        /// метод записи
+        /// </summary>
+        /// <param name="line"></param>
+        static void DataEntry()
+        {
+            using (StreamWriter sw = new StreamWriter("Сотрудники.csv", true, Encoding.Unicode))
+            {
+                string note = string.Empty;
+                Console.Write("\nВведите ID: ");
+                note += $"{Console.ReadLine()}\t";
 
-        //        string now = DateTime.Now.ToString();
-        //        Console.Write($"Время заметки {now}");
-        //        note += $"{now}\t";
+                string now = DateTime.Now.ToString();
+                Console.Write($"Время заметки {now}");
+                note += $"{now}\t";
 
-        //        Console.Write("\nВведите ФИО: ");
-        //        note += $"{Console.ReadLine()}\t";
+                Console.Write("\nВведите ФИО: ");
+                note += $"{Console.ReadLine()}\t";
 
-        //        Console.Write("\nВведите возраст: ");
-        //        note += $"{Console.ReadLine()}\t";
+                Console.Write("\nВведите возраст: ");
+                note += $"{Console.ReadLine()}\t";
 
-        //        Console.Write("\nВведите Рост: ");
-        //        note += $"{Console.ReadLine()}\t";
+                Console.Write("\nВведите Рост: ");
+                note += $"{Console.ReadLine()}\t";
 
-        //        Console.Write("\nВведите дату рождения: ");
-        //        note += $"{Console.ReadLine()}\t";
+                Console.Write("\nВведите дату рождения: ");
+                note += $"{Console.ReadLine()}\t";
 
-        //        Console.Write("\nВведите место рождения: ");
-        //        note += $"{Console.ReadLine()}\t";
-        //        sw.WriteLine(note);
-        //    }
-        //}
+                Console.Write("\nВведите место рождения: ");
+                note += $"{Console.ReadLine()}\t";
+                sw.WriteLine(note);
+            }
+        }
 
         static void Main(string[] args)
         {
@@ -104,6 +104,7 @@ namespace lesson6
                             {
                                 Console.WriteLine(worker.Id + " " +
                                     worker.Id + " " +
+                                    worker.Date + " " +
                                     worker.FullName + " " +
                                     worker.Age + " " +
                                     worker.Height + " " +
@@ -116,9 +117,32 @@ namespace lesson6
                     case 2:
                         {
                             Console.WriteLine("Введите данные сотрудника");
-                            var userFullName = Console.ReadLine();
+                            //var userFullName = Console.ReadLine();
 
-                            string[] props = userFullName.Split(',');
+                            string note = string.Empty;
+                            Console.Write("\nВведите ID: ");
+                            note += $"{Console.ReadLine()}\t";
+
+                            string now = DateTime.Now.ToString();
+                            Console.Write($"Время заметки {now}");
+                            note += $"{now}\t";
+
+                            Console.Write("\nВведите ФИО: ");
+                            note += $"{Console.ReadLine()}\t";
+
+                            Console.Write("\nВведите возраст: ");
+                            note += $"{Console.ReadLine()}\t";
+
+                            Console.Write("\nВведите Рост: ");
+                            note += $"{Console.ReadLine()}\t";
+
+                            Console.Write("\nВведите дату рождения: ");
+                            note += $"{Console.ReadLine()}\t";
+
+                            Console.Write("\nВведите место рождения: ");
+                            note += $"{Console.ReadLine()}\t";
+
+                            string[] props = note.Split('\t');
 
                             int id = int.Parse(props[0]);
                             DateTime date = DateTime.Parse(props[1]);
@@ -128,15 +152,15 @@ namespace lesson6
                             DateTime dateOfBirth = DateTime.Parse(props[5]);
                             string placeOfBirth = props[6];
 
-                            var employee = new Worker(id,
-                                                        date,
-                                                        fullName,
-                                                        age,
-                                                        height,
-                                                        dateOfBirth,
-                                                        placeOfBirth);
+                            var worker = new Worker(id,
+                                                    date,
+                                                    fullName,
+                                                    age,
+                                                    height,
+                                                    dateOfBirth,
+                                                    placeOfBirth);
 
-                            workerRepository.Create(employee);
+                            workerRepository.Create(worker);
                             workerRepository.SaveChanges();
                             break;
                         }

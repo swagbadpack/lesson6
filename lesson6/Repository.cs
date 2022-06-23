@@ -30,6 +30,32 @@ namespace lesson6
         public void Create(Worker worker)
         {
             workers.Add(worker);
+            using (StreamWriter sw = new StreamWriter("Сотрудники.csv", true, Encoding.Unicode))
+            {
+                string note = string.Empty;
+                Console.Write("\nВведите ID: ");
+                note += $"{Console.ReadLine()}\t";
+
+                string now = DateTime.Now.ToString();
+                Console.Write($"Время заметки {now}");
+                note += $"{now}\t";
+
+                Console.Write("\nВведите ФИО: ");
+                note += $"{Console.ReadLine()}\t";
+
+                Console.Write("\nВведите возраст: ");
+                note += $"{Console.ReadLine()}\t";
+
+                Console.Write("\nВведите Рост: ");
+                note += $"{Console.ReadLine()}\t";
+
+                Console.Write("\nВведите дату рождения: ");
+                note += $"{Console.ReadLine()}\t";
+
+                Console.Write("\nВведите место рождения: ");
+                note += $"{Console.ReadLine()}\t";
+                sw.WriteLine(note);
+            }
         }
 
         // Редактируем сотрудника
@@ -53,7 +79,7 @@ namespace lesson6
         // Получаем список всех сотрудников из файла (парсинг файла, частный метод)
         public List<Worker> GetWorkersFromClv()
         {
-            var employees = new List<Worker>();
+            var workers = new List<Worker>();
 
             
             string[] workersClv = File.ReadAllLines("Сотрудники.csv");
@@ -65,7 +91,7 @@ namespace lesson6
                     var worker = GetWorkerFromClvString(workerClvString);
                     workers.Add(worker);
                 }
-                return employees;
+                return workers;
             }
 
             // Получаем сотрудника из строки (парсинг сотрудника, частный метод)
@@ -95,32 +121,37 @@ namespace lesson6
             }
         }
 
-        public void SaveChanges(List<Worker> workers)
+        public void SaveChanges()
         {
-            using (StreamWriter sw = new StreamWriter("Сотрудники.csv", false))
+            using (StreamReader sr = new StreamReader("сотрудники.csv", Encoding.Unicode))
             {
-                foreach (var worker in workers)
+                string line = "null";
+                Console.WriteLine($"{"id",3} {"время добавления",20} {"фио",25} {"возраст",3} {"рост",4} {"дата рождения",12} {"место рождения",16}");
+                while ((line = sr.ReadLine()) != null)
                 {
-                    sw.WriteLine(worker.Id + "\t" +
-                                 worker.Date.ToString() + "\t" +
-                                 worker.FullName + "\t" +
-                                 worker.Age + "\t" +
-                                 worker.Height + "\t" +
-                                 worker.DateOfBirth.ToString() + "\t" +
-                                 worker.PlaceOfBirth);
+                    string[] data = line.Split('\t');
+                    Console.WriteLine($"{data[0],3} {data[1],20} {data[2],25} {data[3],3} {data[4],4} {data[5],12} {data[6],16}");
                 }
             }
+            //using (StreamWriter sw = new StreamWriter("Сотрудники.csv", false))
+            //{
+            //    foreach (var worker in workers)
+            //    {
+            //        sw.WriteLine(worker.Id + "\t" +
+            //                     worker.Date.ToString() + "\t" +
+            //                     worker.FullName + "\t" +
+            //                     worker.Age + "\t" +
+            //                     worker.Height + "\t" +
+            //                     worker.DateOfBirth.ToString() + "\t" +
+            //                     worker.PlaceOfBirth);
+            //    }
+            //}
         }
 
         // Получаем сотрудника по идентификатору
         public Worker GetById(int id)
         {
             return workers.FirstOrDefault(e => e.Id == id);
-        }
-
-        internal void SaveChanges()
-        {
-            throw new NotImplementedException();
         }
     }
 }
